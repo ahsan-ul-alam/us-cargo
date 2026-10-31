@@ -1,0 +1,164 @@
+[04-Jul-2026 11:39:19 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Eloquent\Model" not found in /home/primecar/public_html/app/Models/ContactMessage.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/primecar/public_html/app/Models/ContactMessage.php on line 7
+[04-Jul-2026 11:39:20 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Eloquent\Model" not found in /home/primecar/public_html/app/Models/Customer.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/primecar/public_html/app/Models/Customer.php on line 8
+[04-Jul-2026 11:39:23 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Eloquent\Model" not found in /home/primecar/public_html/app/Models/Manifest.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/primecar/public_html/app/Models/Manifest.php on line 8
+[04-Jul-2026 11:39:27 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Eloquent\Model" not found in /home/primecar/public_html/app/Models/QuoteRequest.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/primecar/public_html/app/Models/QuoteRequest.php on line 7
+[04-Jul-2026 11:39:29 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Eloquent\Model" not found in /home/primecar/public_html/app/Models/Shipment.php:9
+Stack trace:
+#0 {main}
+  thrown in /home/primecar/public_html/app/Models/Shipment.php on line 9
+[04-Jul-2026 11:39:31 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Eloquent\Model" not found in /home/primecar/public_html/app/Models/ShippingRate.php:7
+Stack trace:
+#0 {main}
+  thrown in /home/primecar/public_html/app/Models/ShippingRate.php on line 7
+[04-Jul-2026 11:39:32 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Eloquent\Model" not found in /home/primecar/public_html/app/Models/TrackingEvent.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/primecar/public_html/app/Models/TrackingEvent.php on line 8
+[04-Jul-2026 11:39:33 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Foundation\Auth\User" not found in /home/primecar/public_html/app/Models/User.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/primecar/public_html/app/Models/User.php on line 17
+[04-Jul-2026 14:13:05 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Eloquent\Model" not found in /home/primecar/public_html/app/Models/Customer.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/primecar/public_html/app/Models/Customer.php on line 8
+[04-Jul-2026 14:13:28 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Eloquent\Model" not found in /home/primecar/public_html/app/Models/Customer.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/primecar/public_html/app/Models/Customer.php on line 8
+[04-Jul-2026 14:13:39 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Eloquent\Model" not found in /home/primecar/public_html/app/Models/Customer.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/primecar/public_html/app/Models/Customer.php on line 8
+[04-Jul-2026 14:15:25 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Eloquent\Model" not found in /home/primecar/public_html/app/Models/Customer.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/primecar/public_html/app/Models/Customer.php on line 8
+[04-Jul-2026 14:15:26 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Eloquent\Model" not found in /home/primecar/public_html/app/Models/Customer.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/primecar/public_html/app/Models/Customer.php on line 8
+[04-Jul-2026 14:16:23 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Eloquent\Model" not found in /home/primecar/public_html/app/Models/Customer.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/primecar/public_html/app/Models/Customer.php on line 8
+[04-Jul-2026 14:17:53 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Eloquent\Model" not found in /home/primecar/public_html/app/Models/Customer.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/primecar/public_html/app/Models/Customer.php on line 8
+[04-Jul-2026 14:18:31 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Eloquent\Model" not found in /home/primecar/public_html/app/Models/Customer.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/primecar/public_html/app/Models/Customer.php on line 8
+[04-Jul-2026 14:22:19 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Eloquent\Model" not found in /home/primecar/public_html/app/Models/Customer.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/primecar/public_html/app/Models/Customer.php on line 8
+[04-Jul-2026 14:25:32 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Eloquent\Model" not found in /home/primecar/public_html/app/Models/Customer.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/primecar/public_html/app/Models/Customer.php on line 8
+[04-Jul-2026 14:25:41 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Eloquent\Model" not found in /home/primecar/public_html/app/Models/Customer.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/primecar/public_html/app/Models/Customer.php on line 8
+[04-Jul-2026 14:25:41 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Eloquent\Model" not found in /home/primecar/public_html/app/Models/Customer.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/primecar/public_html/app/Models/Customer.php on line 8
+[04-Jul-2026 14:28:35 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Eloquent\Model" not found in /home/primecar/public_html/app/Models/Customer.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/primecar/public_html/app/Models/Customer.php on line 8
+[04-Jul-2026 14:30:16 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Eloquent\Model" not found in /home/primecar/public_html/app/Models/Customer.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/primecar/public_html/app/Models/Customer.php on line 8
+[04-Jul-2026 14:30:17 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Eloquent\Model" not found in /home/primecar/public_html/app/Models/Customer.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/primecar/public_html/app/Models/Customer.php on line 8
+[04-Jul-2026 14:31:18 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Eloquent\Model" not found in /home/primecar/public_html/app/Models/Customer.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/primecar/public_html/app/Models/Customer.php on line 8
+[04-Jul-2026 14:40:11 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Eloquent\Model" not found in /home/primecar/public_html/app/Models/Customer.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/primecar/public_html/app/Models/Customer.php on line 8
+[04-Jul-2026 14:40:12 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Eloquent\Model" not found in /home/primecar/public_html/app/Models/Customer.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/primecar/public_html/app/Models/Customer.php on line 8
+[04-Jul-2026 14:45:06 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Eloquent\Model" not found in /home/primecar/public_html/app/Models/Customer.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/primecar/public_html/app/Models/Customer.php on line 8
+[04-Jul-2026 14:45:07 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Eloquent\Model" not found in /home/primecar/public_html/app/Models/Customer.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/primecar/public_html/app/Models/Customer.php on line 8
+[04-Jul-2026 14:57:42 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Eloquent\Model" not found in /home/primecar/public_html/app/Models/Customer.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/primecar/public_html/app/Models/Customer.php on line 8
+[04-Jul-2026 15:30:58 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Eloquent\Model" not found in /home/primecar/public_html/app/Models/Customer.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/primecar/public_html/app/Models/Customer.php on line 8
+[04-Jul-2026 15:30:59 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Eloquent\Model" not found in /home/primecar/public_html/app/Models/Customer.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/primecar/public_html/app/Models/Customer.php on line 8
+[04-Jul-2026 15:31:09 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Eloquent\Model" not found in /home/primecar/public_html/app/Models/Customer.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/primecar/public_html/app/Models/Customer.php on line 8
+[04-Jul-2026 15:31:10 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Eloquent\Model" not found in /home/primecar/public_html/app/Models/Customer.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/primecar/public_html/app/Models/Customer.php on line 8
+[04-Jul-2026 15:31:14 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Eloquent\Model" not found in /home/primecar/public_html/app/Models/Customer.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/primecar/public_html/app/Models/Customer.php on line 8
+[04-Jul-2026 15:48:18 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Eloquent\Model" not found in /home/primecar/public_html/app/Models/Customer.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/primecar/public_html/app/Models/Customer.php on line 8
+[05-Jul-2026 07:29:48 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Eloquent\Model" not found in /home/primecar/public_html/app/Models/Customer.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/primecar/public_html/app/Models/Customer.php on line 8
+[05-Jul-2026 07:29:49 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Eloquent\Model" not found in /home/primecar/public_html/app/Models/Customer.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/primecar/public_html/app/Models/Customer.php on line 8
+[06-Jul-2026 07:04:49 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Eloquent\Model" not found in /home/primecar/public_html/app/Models/Customer.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/primecar/public_html/app/Models/Customer.php on line 8
+[06-Jul-2026 07:04:49 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Eloquent\Model" not found in /home/primecar/public_html/app/Models/Customer.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/primecar/public_html/app/Models/Customer.php on line 8
+[06-Jul-2026 21:30:30 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Eloquent\Model" not found in /home/primecar/public_html/app/Models/Customer.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/primecar/public_html/app/Models/Customer.php on line 8
+[06-Jul-2026 21:30:31 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Database\Eloquent\Model" not found in /home/primecar/public_html/app/Models/Customer.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/primecar/public_html/app/Models/Customer.php on line 8

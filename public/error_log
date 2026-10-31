@@ -1,0 +1,7 @@
+[04-Jul-2026 11:21:55 UTC] PHP Fatal error:  Uncaught RuntimeException: Composer detected issues in your platform: Your Composer dependencies require a PHP version ">= 8.4.1". You are running 8.3.31. in /home/primecar/public_html/vendor/composer/platform_check.php:22
+Stack trace:
+#0 /home/primecar/public_html/vendor/composer/autoload_real.php(25): require()
+#1 /home/primecar/public_html/vendor/autoload.php(22): ComposerAutoloaderInit59a6362a4866fd992c6e8d26263c35ee::getLoader()
+#2 /home/primecar/public_html/public/index.php(14): require('/home/primecar/...')
+#3 {main}
+  thrown in /home/primecar/public_html/vendor/composer/platform_check.php on line 22
