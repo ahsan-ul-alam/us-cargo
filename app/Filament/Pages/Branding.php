@@ -38,7 +38,7 @@ class Branding extends Page implements Forms\Contracts\HasForms
             'hero_overlay' => (int) SiteSetting::get('hero_overlay', 85),
             'hero_overlay_color' => SiteSetting::get('hero_overlay_color') ?: SiteSetting::get('brand_primary', SiteSetting::BRAND_PRIMARY),
             'footer_logo' => SiteSetting::get('footer_logo'),
-            'footer_text_color' => SiteSetting::get('footer_text_color') ?: '#d5dbe6',
+            'footer_text_color' => SiteSetting::get('footer_text_color') ?: '#ffffff',
             'site_name' => SiteSetting::siteName(),
             'site_legal_name' => SiteSetting::legalName(),
             'site_title' => SiteSetting::siteTitle(),
@@ -94,7 +94,7 @@ class Branding extends Page implements Forms\Contracts\HasForms
                         ->helperText('Optional. Use a light/white logo that is visible on the dark footer. Leave empty to use the main logo.'),
                     Forms\Components\ColorPicker::make('footer_text_color')
                         ->label('Footer text color')
-                        ->helperText('Color of footer text and links. Default #d5dbe6.'),
+                        ->helperText('Color of footer text and links. Default white (#ffffff).'),
                 ]),
             Forms\Components\Section::make('Favicon')
                 ->description('The small icon in the browser tab. Leave empty to use the default.')

@@ -43,6 +43,9 @@ class SiteSetting extends Model
                 . "--orange:{$s};--orange-dark:color-mix(in srgb,{$s} 90%,#000);--orange-soft:color-mix(in srgb,{$s} 10%,#fff);";
         }
         $fc = $hex('footer_text_color', '');
+        if (strcasecmp($fc, '#d5dbe6') === 0) {
+            $fc = ''; // previous default (dim); now white
+        }
         if ($fc !== '') {
             $css .= "--foot-c:{$fc};";
         }
