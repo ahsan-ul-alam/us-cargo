@@ -80,7 +80,7 @@
     <div class="container">
       <div class="footer-grid">
         <div>
-          <div class="foot-brand"><span class="a">PRIME</span> <span class="b">CARGO</span></div>
+          <a href="{{ route('home') }}" class="foot-brand"><img src="{{ \App\Models\SiteSetting::footerLogoUrl() }}" alt="{{ \App\Models\SiteSetting::siteName() }}" /></a>
           <p class="foot-about">যুক্তরাজ্য ও বাংলাদেশের মধ্যে দ্রুত, নিরাপদ ও সাশ্রয়ী কার্গো সার্ভিস।</p>
         </div>
         <div>

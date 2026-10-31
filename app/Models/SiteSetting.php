@@ -42,6 +42,10 @@ class SiteSetting extends Model
             $css .= "--navy:{$p};--navy-2:color-mix(in srgb,{$p} 85%,#fff);"
                 . "--orange:{$s};--orange-dark:color-mix(in srgb,{$s} 90%,#000);--orange-soft:color-mix(in srgb,{$s} 10%,#fff);";
         }
+        $fc = $hex('footer_text_color', '');
+        if ($fc !== '') {
+            $css .= "--foot-c:{$fc};";
+        }
         $hc = $hex('hero_overlay_color', '');
         if ($hc !== '') {
             $css .= "--hero-c:{$hc};";
@@ -79,6 +83,14 @@ class SiteSetting extends Model
         $path = static::get('brand_logo');
 
         return $path ? asset('storage/' . $path) : asset('images/pirmecargo.png');
+    }
+
+    /** Footer logo: its own upload if set (e.g. a white version), otherwise the main logo. */
+    public static function footerLogoUrl(): string
+    {
+        $path = static::get('footer_logo');
+
+        return $path ? asset('storage/' . $path) : static::logoUrl();
     }
 
     public static function faviconUrl(): string

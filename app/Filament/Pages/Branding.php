@@ -37,6 +37,8 @@ class Branding extends Page implements Forms\Contracts\HasForms
             'brand_secondary' => SiteSetting::get('brand_secondary', SiteSetting::BRAND_SECONDARY),
             'hero_overlay' => (int) SiteSetting::get('hero_overlay', 85),
             'hero_overlay_color' => SiteSetting::get('hero_overlay_color') ?: SiteSetting::get('brand_primary', SiteSetting::BRAND_PRIMARY),
+            'footer_logo' => SiteSetting::get('footer_logo'),
+            'footer_text_color' => SiteSetting::get('footer_text_color') ?: '#d5dbe6',
             'site_name' => SiteSetting::siteName(),
             'site_legal_name' => SiteSetting::legalName(),
             'site_title' => SiteSetting::siteTitle(),
@@ -79,6 +81,21 @@ class Branding extends Page implements Forms\Contracts\HasForms
                         ->maxSize(2048)
                         ->helperText('PNG, JPG or WebP, up to 2 MB. A transparent PNG about 400 px wide works best.'),
                 ]),
+            Forms\Components\Section::make('Footer')
+                ->description('Logo and text color of the website footer (the footer background uses the primary color).')
+                ->columns(2)
+                ->schema([
+                    Forms\Components\FileUpload::make('footer_logo')
+                        ->label('Footer logo')
+                        ->image()
+                        ->acceptedFileTypes(['image/png', 'image/jpeg', 'image/webp'])
+                        ->disk('public')->directory('branding')->visibility('public')
+                        ->maxSize(2048)
+                        ->helperText('Optional. Use a light/white logo that is visible on the dark footer. Leave empty to use the main logo.'),
+                    Forms\Components\ColorPicker::make('footer_text_color')
+                        ->label('Footer text color')
+                        ->helperText('Color of footer text and links. Default #d5dbe6.'),
+                ]),
             Forms\Components\Section::make('Favicon')
                 ->description('The small icon in the browser tab. Leave empty to use the default.')
                 ->schema([
@@ -119,7 +136,9 @@ class Branding extends Page implements Forms\Contracts\HasForms
 
         $data = $this->form->getState();
 
-        foreach (['brand_logo', 'brand_favicon'] as $key) {
+        SiteSetting::set('footer_text_color', (string) ($data['footer_text_color'] ?? ''));
+
+        foreach (['brand_logo', 'brand_favicon', 'footer_logo'] as $key) {
             $old = SiteSetting::get($key);
             $new = $data[$key] ?? null;
 
