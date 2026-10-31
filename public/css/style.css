@@ -629,3 +629,5 @@ body.no-scroll { overflow: hidden; }
 @media (max-width: 560px) { .vp-vol { width: 48px; } .vp-time { display: none; } }
 .foot-brand { display: inline-block; }
 .foot-brand img { display: block; height: 52px; width: auto; max-width: 220px; object-fit: contain; }
+
+.site-footer p, .site-footer li, .foot-about { color: var(--foot-c, #fff); }
