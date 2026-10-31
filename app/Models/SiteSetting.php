@@ -42,6 +42,10 @@ class SiteSetting extends Model
             $css .= "--navy:{$p};--navy-2:color-mix(in srgb,{$p} 85%,#fff);"
                 . "--orange:{$s};--orange-dark:color-mix(in srgb,{$s} 90%,#000);--orange-soft:color-mix(in srgb,{$s} 10%,#fff);";
         }
+        $hc = $hex('hero_overlay_color', '');
+        if ($hc !== '') {
+            $css .= "--hero-c:{$hc};";
+        }
         if ($o !== 85) {
             $css .= '--hero-o:' . ($o / 100) . ';';
         }

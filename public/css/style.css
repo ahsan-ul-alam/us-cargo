@@ -170,17 +170,17 @@ p { color: var(--muted); }
   inset: 0;
   background: linear-gradient(
     260deg,
-    color-mix(in srgb, var(--navy) calc(var(--hero-o) * 100%), transparent) 10%,
-    color-mix(in srgb, var(--navy) calc(var(--hero-o) * 97.2%), transparent) 19%,
-    color-mix(in srgb, var(--navy) calc(var(--hero-o) * 89.6%), transparent) 28%,
-    color-mix(in srgb, var(--navy) calc(var(--hero-o) * 78.4%), transparent) 37%,
-    color-mix(in srgb, var(--navy) calc(var(--hero-o) * 64.8%), transparent) 46%,
-    color-mix(in srgb, var(--navy) calc(var(--hero-o) * 50%), transparent) 55%,
-    color-mix(in srgb, var(--navy) calc(var(--hero-o) * 35.2%), transparent) 64%,
-    color-mix(in srgb, var(--navy) calc(var(--hero-o) * 21.6%), transparent) 73%,
-    color-mix(in srgb, var(--navy) calc(var(--hero-o) * 10.4%), transparent) 82%,
-    color-mix(in srgb, var(--navy) calc(var(--hero-o) * 2.8%), transparent) 91%,
-    color-mix(in srgb, var(--navy) calc(var(--hero-o) * 0%), transparent) 100%
+    color-mix(in srgb, var(--hero-c, var(--navy)) calc(var(--hero-o) * 100%), transparent) 10%,
+    color-mix(in srgb, var(--hero-c, var(--navy)) calc(var(--hero-o) * 97.2%), transparent) 19%,
+    color-mix(in srgb, var(--hero-c, var(--navy)) calc(var(--hero-o) * 89.6%), transparent) 28%,
+    color-mix(in srgb, var(--hero-c, var(--navy)) calc(var(--hero-o) * 78.4%), transparent) 37%,
+    color-mix(in srgb, var(--hero-c, var(--navy)) calc(var(--hero-o) * 64.8%), transparent) 46%,
+    color-mix(in srgb, var(--hero-c, var(--navy)) calc(var(--hero-o) * 50%), transparent) 55%,
+    color-mix(in srgb, var(--hero-c, var(--navy)) calc(var(--hero-o) * 35.2%), transparent) 64%,
+    color-mix(in srgb, var(--hero-c, var(--navy)) calc(var(--hero-o) * 21.6%), transparent) 73%,
+    color-mix(in srgb, var(--hero-c, var(--navy)) calc(var(--hero-o) * 10.4%), transparent) 82%,
+    color-mix(in srgb, var(--hero-c, var(--navy)) calc(var(--hero-o) * 2.8%), transparent) 91%,
+    color-mix(in srgb, var(--hero-c, var(--navy)) calc(var(--hero-o) * 0%), transparent) 100%
   );
   z-index: -1;
 }

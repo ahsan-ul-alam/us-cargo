@@ -36,6 +36,7 @@ class Branding extends Page implements Forms\Contracts\HasForms
             'brand_primary' => SiteSetting::get('brand_primary', SiteSetting::BRAND_PRIMARY),
             'brand_secondary' => SiteSetting::get('brand_secondary', SiteSetting::BRAND_SECONDARY),
             'hero_overlay' => (int) SiteSetting::get('hero_overlay', 85),
+            'hero_overlay_color' => SiteSetting::get('hero_overlay_color') ?: SiteSetting::get('brand_primary', SiteSetting::BRAND_PRIMARY),
             'site_name' => SiteSetting::siteName(),
             'site_legal_name' => SiteSetting::legalName(),
             'site_title' => SiteSetting::siteTitle(),
@@ -100,6 +101,9 @@ class Branding extends Page implements Forms\Contracts\HasForms
                         ->label('Secondary color')
                         ->helperText('Accents, main buttons, highlights. Default #fd9230.')
                         ->required(),
+                    Forms\Components\ColorPicker::make('hero_overlay_color')
+                        ->label('Hero overlay color')
+                        ->helperText('Color of the gradient over the hero image. Defaults to the primary color.'),
                     Forms\Components\TextInput::make('hero_overlay')
                         ->label('Hero overlay strength (%)')
                         ->numeric()->minValue(0)->maxValue(100)->step(5)->suffix('%')->default(85)->required()
@@ -127,6 +131,11 @@ class Branding extends Page implements Forms\Contracts\HasForms
 
         SiteSetting::set('brand_primary', $data['brand_primary'] ?? SiteSetting::BRAND_PRIMARY);
         SiteSetting::set('brand_secondary', $data['brand_secondary'] ?? SiteSetting::BRAND_SECONDARY);
+
+        $hc = (string) ($data['hero_overlay_color'] ?? '');
+        $primary = (string) ($data['brand_primary'] ?? SiteSetting::BRAND_PRIMARY);
+        // Storing nothing keeps the overlay following the primary color.
+        SiteSetting::set('hero_overlay_color', strcasecmp($hc, $primary) === 0 ? '' : $hc);
 
         SiteSetting::set('hero_overlay', max(0, min(100, (int) ($data['hero_overlay'] ?? 85))));
 
