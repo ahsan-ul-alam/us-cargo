@@ -615,3 +615,15 @@ body.no-scroll { overflow: hidden; }
 .video-stage iframe, .video-stage video { width: 100%; height: 100%; border: 0; display: block; background: #000; }
 .video-modal-title { color: #fff; font-weight: 600; margin-top: 12px; }
 .video-close { position: absolute; top: -44px; right: 0; background: none; border: 0; color: #fff; font-size: 2.2rem; line-height: 1; cursor: pointer; }
+
+/* ---------- Player: full-width control bar, seek, fullscreen ---------- */
+.vp-controls { right: 14px; }
+.vp-seek { -webkit-appearance: none; appearance: none; flex: 1; min-width: 0; height: 4px; border-radius: 4px; background: rgba(255,255,255,.35); outline: none; cursor: pointer; }
+.vp-seek::-webkit-slider-thumb { -webkit-appearance: none; width: 14px; height: 14px; border-radius: 50%; background: var(--orange); border: 2px solid #fff; }
+.vp-seek::-moz-range-thumb { width: 12px; height: 12px; border-radius: 50%; background: var(--orange); border: 2px solid #fff; }
+.vp-time { color: #fff; font-size: .78rem; min-width: 34px; text-align: right; font-variant-numeric: tabular-nums; }
+.vp-shield { cursor: pointer; }
+.vp:fullscreen, .vp:-webkit-full-screen { max-height: none; border-radius: 0; border: 0; display: flex; align-items: center; background: #000; }
+.vp:fullscreen .vp-frame, .vp:-webkit-full-screen .vp-frame { width: 100%; max-height: none; aspect-ratio: auto; height: 100%; }
+.vp:fullscreen .vp-frame video, .vp:-webkit-full-screen .vp-frame video { object-fit: contain; }
+@media (max-width: 560px) { .vp-vol { width: 48px; } .vp-time { display: none; } }
