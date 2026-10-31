@@ -18,6 +18,8 @@ class VideoEmbed
                 'disablekb' => (int) ! $controls, 'iv_load_policy' => 3, 'fs' => (int) $controls,
                 'autoplay' => (int) $autoplay, 'mute' => (int) $muted,
                 'loop' => (int) $loop, 'playlist' => $loop ? $m[1] : null,
+                // Lets the IFrame API receive state events from the embed.
+                'origin' => app()->bound('request') ? request()->getSchemeAndHttpHost() : null,
             ]);
             return ['provider' => 'youtube', 'id' => $m[1], 'src' => "https://www.youtube-nocookie.com/embed/{$m[1]}?{$q}"];
         }

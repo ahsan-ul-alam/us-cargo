@@ -75,36 +75,57 @@
     else if (provider === 'vimeo') vimeoQueue.push([vp, iframe]);
   });
 
+  // Commands issued before the embedded player is ready are queued, not lost.
+  function gate() {
+    var ready = false, q = [];
+    return {
+      run: function (fn) { ready ? fn() : q.push(fn); },
+      open: function () { ready = true; q.splice(0).forEach(function (fn) { fn(); }); }
+    };
+  }
+
   if (ytQueue.length) {
+    var ytPrev = window.onYouTubeIframeAPIReady;
     window.onYouTubeIframeAPIReady = function () {
+      if (ytPrev) ytPrev();
       ytQueue.forEach(function (it) {
-        var cb = function () {};
-        var p = new YT.Player(it[1], { events: { onStateChange: function (e) {
-          if (e.data === 1) cb(true); else if (e.data === 2) cb(false);
-        } } });
+        var cb = function () {}, g = gate(), p;
+        p = new YT.Player(it[1], { events: {
+          onReady: function () { g.open(); },
+          onStateChange: function (e) {
+            if (e.data === 1 || e.data === 3) cb(true);        // playing / buffering
+            else if (e.data === 2 || e.data === 5) cb(false);  // paused / not started
+          }
+        } });
         setup(it[0], {
-          play: function () { p.playVideo(); }, pause: function () { p.pauseVideo(); },
-          setMuted: function (m) { if (m) p.mute(); else p.unMute(); },
-          setVolume: function (v) { p.setVolume(v); },
+          play: function () { g.run(function () { p.playVideo(); }); },
+          pause: function () { g.run(function () { p.pauseVideo(); }); },
+          setMuted: function (m) { g.run(function () { if (m) p.mute(); else p.unMute(); }); },
+          setVolume: function (v) { g.run(function () { p.setVolume(v); }); },
           onState: function (f) { cb = f; }
         });
       });
     };
-    load('https://www.youtube.com/iframe_api');
+    if (window.YT && YT.Player) window.onYouTubeIframeAPIReady();
+    else load('https://www.youtube.com/iframe_api');
   }
 
   if (vimeoQueue.length) {
-    load('https://player.vimeo.com/api/player.js').onload = function () {
+    var startVimeo = function () {
       vimeoQueue.forEach(function (it) {
-        var p = new Vimeo.Player(it[1]);
+        var p = new Vimeo.Player(it[1]), g = gate();
+        p.ready().then(function () { g.open(); });
         setup(it[0], {
-          play: function () { p.play(); }, pause: function () { p.pause(); },
-          setMuted: function (m) { if (m) p.setVolume(0); },
-          setVolume: function (v) { p.setVolume(v / 100); },
+          play: function () { g.run(function () { p.play().catch(function () {}); }); },
+          pause: function () { g.run(function () { p.pause().catch(function () {}); }); },
+          setMuted: function (m) { g.run(function () { p.setMuted(m).catch(function () {}); }); },
+          setVolume: function (v) { g.run(function () { p.setVolume(v / 100).catch(function () {}); }); },
           onState: function (f) { p.on('play', function () { f(true); }); p.on('pause', function () { f(false); }); }
         });
       });
     };
+    if (window.Vimeo && Vimeo.Player) startVimeo();
+    else load('https://player.vimeo.com/api/player.js').onload = startVimeo;
   }
 })();
 </script>
