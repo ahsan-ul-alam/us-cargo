@@ -31,11 +31,15 @@ class TrackingController extends Controller
                 'status'             => $shipment->status,
                 'status_label'       => $shipment->status_label,
                 'status_color'       => $shipment->status_color,
-                'sender_name'        => $shipment->sender_name,
+                'is_consolidated'    => (bool) $shipment->is_consolidated,
+                // Never expose personal names for consolidated (multi-person) shipments.
+                'sender_name'        => $shipment->is_consolidated ? null : $shipment->sender_name,
                 'sender_country'     => strtoupper($shipment->sender_country),
-                'recipient_name'     => $shipment->recipient_name,
+                'recipient_name'     => $shipment->is_consolidated ? null : $shipment->recipient_name,
                 'recipient_country'  => strtoupper($shipment->recipient_country),
-                'weight_kg'          => $shipment->weight_kg,
+                'parcel_count'       => $shipment->is_consolidated ? $shipment->parcel_count : null,
+                // Weight is internal for consolidated shipments; never shown on public tracking.
+                'weight_kg'          => $shipment->is_consolidated ? null : $shipment->weight_kg,
                 'estimated_delivery' => $shipment->estimated_delivery?->format('d M Y'),
                 'events'             => $shipment->trackingEvents->map(fn ($e) => [
                     'occurred_at' => $e->occurred_at->format('d M Y, H:i'),

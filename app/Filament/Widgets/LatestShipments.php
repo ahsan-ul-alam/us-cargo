@@ -23,8 +23,8 @@ class LatestShipments extends BaseWidget
             ->paginated(false)
             ->columns([
                 Tables\Columns\TextColumn::make('tracking_number')->weight('bold')->copyable(),
-                Tables\Columns\TextColumn::make('sender_name')->label('Sender'),
-                Tables\Columns\TextColumn::make('recipient_name')->label('Recipient'),
+                Tables\Columns\TextColumn::make('sender_name')->label('Sender')->state(fn ($record) => $record->sender_label),
+                Tables\Columns\TextColumn::make('recipient_name')->label('Recipient')->state(fn ($record) => $record->recipient_label),
                 Tables\Columns\TextColumn::make('weight_kg')->label('Weight')->suffix(' kg'),
                 Tables\Columns\TextColumn::make('price_gbp')->label('Price')->prefix('£'),
                 Tables\Columns\TextColumn::make('payment_status')->label('Payment')->badge()

@@ -32,8 +32,18 @@ class ShipmentResource extends Resource
                         ->required()
                         ->unique(ignoreRecord: true)
                         ->readOnly(),
+                    Forms\Components\Toggle::make('is_consolidated')
+                        ->label('Consolidated shipment (multiple people\'s parcels)')
+                        ->helperText('No individual sender/recipient details are entered or shown publicly.')
+                        ->live()
+                        ->default(false)
+                        ->columnSpanFull(),
+                    Forms\Components\TextInput::make('parcel_count')
+                        ->label('Number of parcels')
+                        ->numeric()->minValue(1)
+                        ->visible(fn (Forms\Get $get) => (bool) $get('is_consolidated')),
                     Forms\Components\Select::make('customer_id')
-                        ->label('Customer')
+                        ->label('Customer / Agent')
                         ->relationship('customer', 'name')
                         ->searchable()
                         ->preload()
@@ -44,17 +54,23 @@ class ShipmentResource extends Resource
                         ->searchable()
                         ->preload()
                         ->nullable(),
+                    Forms\Components\Toggle::make('is_sea')
+                        ->label('Sea freight (default: Air)')
+                        ->helperText('Off = Air (UK Airport → In Air → Bangladesh Airport). On = Sea (UK Port → In Sea → Chattogram Port).')
+                        ->live()
+                        ->dehydrated(false)
+                        ->afterStateHydrated(fn (Forms\Components\Toggle $component, ?Shipment $record) => $component->state($record?->transport_mode === 'sea'))
+                        ->afterStateUpdated(function ($state, Forms\Set $set, Forms\Get $get) {
+                            $set('transport_mode', $state ? 'sea' : 'air');
+                            // Keep the status valid for the chosen mode (e.g. UK Airport has no sea equivalent).
+                            if (! array_key_exists($get('status'), Shipment::statusOptions($state ? 'sea' : 'air'))) {
+                                $set('status', 'collected');
+                            }
+                        }),
+                    Forms\Components\Hidden::make('transport_mode')->default('air'),
                     Forms\Components\Select::make('status')
-                        ->options([
-                            'pending'           => 'Pending',
-                            'collected'         => 'Collected',
-                            'in_transit'        => 'In Transit',
-                            'customs_clearance' => 'Customs Clearance',
-                            'out_for_delivery'  => 'Out for Delivery',
-                            'delivered'         => 'Delivered',
-                            'returned'          => 'Returned',
-                            'cancelled'         => 'Cancelled',
-                        ])
+                        ->options(fn (Forms\Get $get) => Shipment::statusOptions($get('transport_mode')))
+                        ->default('pending')
                         ->required(),
                     Forms\Components\Select::make('service_type')
                         ->options([
@@ -67,22 +83,32 @@ class ShipmentResource extends Resource
 
             Forms\Components\Section::make('Sender Details')
                 ->columns(2)
+                ->hidden(fn (Forms\Get $get) => (bool) $get('is_consolidated'))
                 ->schema([
-                    Forms\Components\TextInput::make('sender_name')->required(),
-                    Forms\Components\TextInput::make('sender_phone')->required(),
-                    Forms\Components\TextInput::make('sender_address')->required()->columnSpanFull(),
-                    Forms\Components\Select::make('sender_country')
-                        ->options(['uk' => 'United Kingdom', 'bd' => 'Bangladesh'])
-                        ->default('uk')->required(),
+                    Forms\Components\TextInput::make('sender_name')->required(fn (Forms\Get $get) => ! $get('is_consolidated')),
+                    Forms\Components\TextInput::make('sender_phone')->required(fn (Forms\Get $get) => ! $get('is_consolidated')),
+                    Forms\Components\TextInput::make('sender_address')->required(fn (Forms\Get $get) => ! $get('is_consolidated'))->columnSpanFull(),
                 ]),
 
             Forms\Components\Section::make('Recipient Details')
                 ->columns(2)
+                ->hidden(fn (Forms\Get $get) => (bool) $get('is_consolidated'))
                 ->schema([
-                    Forms\Components\TextInput::make('recipient_name')->required(),
-                    Forms\Components\TextInput::make('recipient_phone')->required(),
-                    Forms\Components\TextInput::make('recipient_address')->required()->columnSpanFull(),
+                    Forms\Components\TextInput::make('recipient_name')->required(fn (Forms\Get $get) => ! $get('is_consolidated')),
+                    Forms\Components\TextInput::make('recipient_phone')->required(fn (Forms\Get $get) => ! $get('is_consolidated')),
+                    Forms\Components\TextInput::make('recipient_address')->required(fn (Forms\Get $get) => ! $get('is_consolidated'))->columnSpanFull(),
+                ]),
+
+            // Route countries stay visible for both modes (needed for routing; not personal data).
+            Forms\Components\Section::make('Route')
+                ->columns(2)
+                ->schema([
+                    Forms\Components\Select::make('sender_country')
+                        ->label('Origin country')
+                        ->options(['uk' => 'United Kingdom', 'bd' => 'Bangladesh'])
+                        ->default('uk')->required(),
                     Forms\Components\Select::make('recipient_country')
+                        ->label('Destination country')
                         ->options(['uk' => 'United Kingdom', 'bd' => 'Bangladesh'])
                         ->default('bd')->required(),
                 ]),
@@ -91,7 +117,8 @@ class ShipmentResource extends Resource
                 ->columns(3)
                 ->schema([
                     Forms\Components\TextInput::make('weight_kg')
-                        ->label('Weight (kg)')->numeric()->required(),
+                        ->label('Weight (kg)')->numeric()->nullable()
+                        ->helperText('Optional — leave empty for consolidated shipments.'),
                     Forms\Components\TextInput::make('price_gbp')
                         ->label('Price (£)')->numeric()->nullable(),
                     Forms\Components\DatePicker::make('estimated_delivery')
@@ -134,25 +161,27 @@ class ShipmentResource extends Resource
                 Tables\Columns\TextColumn::make('tracking_number')
                     ->searchable()->copyable()->weight('bold'),
                 Tables\Columns\TextColumn::make('sender_name')
-                    ->searchable()->label('Sender'),
+                    ->searchable()->label('Sender')
+                    ->state(fn (Shipment $record) => $record->sender_label),
                 Tables\Columns\TextColumn::make('recipient_name')
-                    ->searchable()->label('Recipient'),
+                    ->searchable()->label('Recipient')
+                    ->state(fn (Shipment $record) => $record->recipient_label),
                 Tables\Columns\TextColumn::make('weight_kg')
-                    ->label('Weight')->suffix(' kg')->sortable(),
+                    ->label('Weight')->suffix(' kg')->placeholder('—')->sortable(),
                 Tables\Columns\TextColumn::make('price_gbp')
                     ->label('Price')->prefix('£')->sortable(),
                 Tables\Columns\BadgeColumn::make('payment_status')
                     ->label('Payment')
                     ->colors(['danger' => 'unpaid', 'warning' => 'partial', 'success' => 'paid']),
-                Tables\Columns\BadgeColumn::make('status')
-                    ->colors([
-                        'gray'    => 'pending',
-                        'primary' => 'collected',
-                        'info'    => ['in_transit', 'out_for_delivery'],
-                        'warning' => 'customs_clearance',
-                        'success' => 'delivered',
-                        'danger'  => ['returned', 'cancelled'],
-                    ]),
+                Tables\Columns\TextColumn::make('status')
+                    ->badge()
+                    ->formatStateUsing(fn ($state) => Shipment::allStatusOptions()[$state] ?? $state)
+                    ->color(fn ($state) => (new Shipment(['status' => $state]))->status_color),
+                Tables\Columns\TextColumn::make('transport_mode')
+                    ->label('Mode')->badge()
+                    ->formatStateUsing(fn ($state) => $state === 'sea' ? 'Sea' : 'Air')
+                    ->color(fn ($state) => $state === 'sea' ? 'info' : 'gray')
+                    ->toggleable(),
                 Tables\Columns\TextColumn::make('manifest.manifest_number')
                     ->label('Manifest')->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('estimated_delivery')
@@ -162,16 +191,10 @@ class ShipmentResource extends Resource
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('status')
-                    ->options([
-                        'pending'           => 'Pending',
-                        'collected'         => 'Collected',
-                        'in_transit'        => 'In Transit',
-                        'customs_clearance' => 'Customs Clearance',
-                        'out_for_delivery'  => 'Out for Delivery',
-                        'delivered'         => 'Delivered',
-                        'returned'          => 'Returned',
-                        'cancelled'         => 'Cancelled',
-                    ]),
+                    ->options(fn () => Shipment::allStatusOptions()),
+                Tables\Filters\SelectFilter::make('transport_mode')
+                    ->label('Mode')
+                    ->options(['air' => 'Air', 'sea' => 'Sea']),
                 Tables\Filters\SelectFilter::make('service_type')
                     ->options([
                         'air_cargo'    => 'Air Cargo',
@@ -223,9 +246,15 @@ class ShipmentResource extends Resource
                     Infolists\Components\TextEntry::make('tracking_number')->copyable()->weight('bold'),
                     Infolists\Components\TextEntry::make('status')
                         ->badge()
+                        ->formatStateUsing(fn ($state) => Shipment::allStatusOptions()[$state] ?? $state)
                         ->color(fn (Shipment $record) => $record->status_color),
+                    Infolists\Components\TextEntry::make('transport_mode')
+                        ->label('Mode')->badge()
+                        ->formatStateUsing(fn ($state) => $state === 'sea' ? 'Sea' : 'Air'),
                     Infolists\Components\TextEntry::make('service_type')->badge()->color('primary'),
-                    Infolists\Components\TextEntry::make('weight_kg')->suffix(' kg'),
+                    Infolists\Components\TextEntry::make('parcel_count')->label('Parcels')
+                        ->visible(fn (Shipment $record) => $record->is_consolidated),
+                    Infolists\Components\TextEntry::make('weight_kg')->suffix(' kg')->placeholder('—'),
                     Infolists\Components\TextEntry::make('price_gbp')->prefix('£'),
                     Infolists\Components\TextEntry::make('estimated_delivery')->date(),
                 ]),
@@ -260,6 +289,7 @@ class ShipmentResource extends Resource
 
             Infolists\Components\Section::make('Sender & Recipient')
                 ->columns(2)
+                ->hidden(fn (Shipment $record) => $record->is_consolidated)
                 ->schema([
                     Infolists\Components\Group::make([
                         Infolists\Components\TextEntry::make('sender_name')->label('Name'),

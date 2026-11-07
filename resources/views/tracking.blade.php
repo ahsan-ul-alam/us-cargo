@@ -31,9 +31,9 @@
             <span class="status-pill" id="resStatus"></span>
           </div>
           <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:20px;padding-top:20px;border-top:1px solid var(--line);">
-            <div><div style="font-size:.8rem;color:var(--muted)">প্রেরক</div><b id="resSender"></b></div>
-            <div><div style="font-size:.8rem;color:var(--muted)">প্রাপক</div><b id="resRecipient"></b></div>
-            <div><div style="font-size:.8rem;color:var(--muted)">ওজন</div><b id="resWeight"></b></div>
+            <div><div style="font-size:.8rem;color:var(--muted)" id="resSenderLabel">প্রেরক</div><b id="resSender"></b></div>
+            <div><div style="font-size:.8rem;color:var(--muted)" id="resRecipientLabel">প্রাপক</div><b id="resRecipient"></b></div>
+            <div id="resWeightBox"><div style="font-size:.8rem;color:var(--muted)">ওজন</div><b id="resWeight"></b></div>
             <div><div style="font-size:.8rem;color:var(--muted)">আনুমানিক ডেলিভারি</div><b id="resEta"></b></div>
           </div>
         </div>
@@ -83,9 +83,20 @@ async function doTrack(code) {
   const s = data.shipment;
   document.getElementById('resTrackNum').textContent = s.tracking_number;
   document.getElementById('resStatus').textContent = s.status_label;
-  document.getElementById('resSender').textContent = s.sender_name + ' (' + s.sender_country + ')';
-  document.getElementById('resRecipient').textContent = s.recipient_name + ' (' + s.recipient_country + ')';
-  document.getElementById('resWeight').textContent = s.weight_kg + ' kg';
+  if (s.is_consolidated) {
+    document.getElementById('resSenderLabel').textContent = 'গন্তব্য';
+    document.getElementById('resSender').textContent = s.sender_country + ' → ' + s.recipient_country;
+    document.getElementById('resRecipientLabel').textContent = 'ধরন';
+    document.getElementById('resRecipient').textContent = 'কনসোলিডেটেড শিপমেন্ট' + (s.parcel_count ? ' (' + s.parcel_count + ' পার্সেল)' : '');
+  } else {
+    document.getElementById('resSenderLabel').textContent = 'প্রেরক';
+    document.getElementById('resSender').textContent = s.sender_name + ' (' + s.sender_country + ')';
+    document.getElementById('resRecipientLabel').textContent = 'প্রাপক';
+    document.getElementById('resRecipient').textContent = s.recipient_name + ' (' + s.recipient_country + ')';
+  }
+  const hasWeight = s.weight_kg !== null && s.weight_kg !== undefined && s.weight_kg !== '';
+  document.getElementById('resWeightBox').classList.toggle('hidden', !hasWeight);
+  if (hasWeight) document.getElementById('resWeight').textContent = s.weight_kg + ' kg';
   document.getElementById('resEta').textContent = s.estimated_delivery || 'অজানা';
   renderTimeline(s.events);
   resultDiv.classList.remove('hidden');

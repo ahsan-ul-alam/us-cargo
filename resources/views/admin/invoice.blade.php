@@ -45,6 +45,18 @@
     </div>
 
     <div class="grid">
+        @if ($shipment->is_consolidated)
+        <div class="box">
+            <h3>Consignment</h3>
+            <div>Consolidated shipment</div>
+            @if ($shipment->parcel_count)<div>{{ $shipment->parcel_count }} parcels</div>@endif
+            @if ($shipment->customer)<div>{{ $shipment->customer->name }}</div>@endif
+        </div>
+        <div class="box">
+            <h3>Route</h3>
+            <div>{{ strtoupper($shipment->sender_country) }} → {{ strtoupper($shipment->recipient_country) }}</div>
+        </div>
+        @else
         <div class="box">
             <h3>Sender</h3>
             <div>{{ $shipment->sender_name }}</div>
@@ -59,6 +71,7 @@
             <div>{{ $shipment->recipient_address }}</div>
             <div>{{ strtoupper($shipment->recipient_country) }}</div>
         </div>
+        @endif
         <div class="box">
             <h3>Shipment</h3>
             <div>Tracking: {{ $shipment->tracking_number }}</div>
@@ -80,8 +93,8 @@
         <tbody>
             <tr>
                 <td>{{ $shipment->description ?: 'Cargo shipment' }}</td>
-                <td>{{ $shipment->weight_kg }} kg</td>
-                <td>£{{ $shipment->weight_kg > 0 ? number_format($shipment->price_gbp / $shipment->weight_kg, 2) : '—' }}/kg</td>
+                <td>{{ $shipment->weight_kg > 0 ? $shipment->weight_kg . ' kg' : '—' }}</td>
+                <td>{{ $shipment->weight_kg > 0 ? '£' . number_format($shipment->price_gbp / $shipment->weight_kg, 2) . '/kg' : '—' }}</td>
                 <td style="text-align:right">£{{ number_format($shipment->price_gbp ?? 0, 2) }}</td>
             </tr>
         </tbody>

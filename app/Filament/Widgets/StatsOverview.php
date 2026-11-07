@@ -46,8 +46,8 @@ class StatsOverview extends BaseWidget
                 ->chart($spark)
                 ->color($thisMonth >= $lastMonth ? 'success' : 'danger'),
 
-            Stat::make('Active shipments', Shipment::whereIn('status', ['collected', 'in_transit', 'customs_clearance', 'out_for_delivery'])->count())
-                ->description('Collected → out for delivery')
+            Stat::make('Active shipments', Shipment::whereNotIn('status', ['pending', 'delivered', 'returned', 'cancelled'])->count())
+                ->description('Collected → in transit')
                 ->descriptionIcon('heroicon-m-truck')
                 ->color('info'),
 
