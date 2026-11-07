@@ -14,7 +14,7 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap"
     rel="stylesheet" />
-  <link rel="stylesheet" href="{{ asset('css/style.css') }}" />
+  <link rel="stylesheet" href="{{ asset('css/style.css') }}?v={{ @filemtime(public_path('css/style.css')) }}" />
   @if($brandCss = \App\Models\SiteSetting::brandCss())
   <style>{!! $brandCss !!}</style>
   @endif
@@ -116,7 +116,7 @@
     </div>
   </footer>
 
-  <script src="{{ asset('js/main.js') }}"></script>
+  <script src="{{ asset('js/main.js') }}?v={{ @filemtime(public_path('js/main.js')) }}"></script>
   @include('partials.popup')
   @stack('scripts')
 </body>
