@@ -134,10 +134,9 @@ class ShipmentResource extends Resource
             Forms\Components\Section::make('Payment')
                 ->columns(3)
                 ->schema([
-                    Forms\Components\TextInput::make('invoice_number')
-                        ->default(fn () => Shipment::generateInvoiceNumber())
-                        ->unique(ignoreRecord: true)
-                        ->readOnly(),
+                    // Not shown in the form; still auto-generated so every shipment keeps an invoice number.
+                    Forms\Components\Hidden::make('invoice_number')
+                        ->default(fn () => Shipment::generateInvoiceNumber()),
                     Forms\Components\Select::make('payment_status')
                         ->options(['unpaid' => 'Unpaid', 'partial' => 'Partial', 'paid' => 'Paid'])
                         ->default('unpaid')->required()->live(),
