@@ -27,7 +27,7 @@ class ShipmentStatusFlowTest extends TestCase
         $air = array_keys(Shipment::statusOptions('air'));
         $sea = array_keys(Shipment::statusOptions('sea'));
 
-        foreach (['uk_airport', 'in_air', 'bd_airport'] as $s) {
+        foreach (['uk_airport', 'in_air', 'bd_airport', 'sylhet_airport'] as $s) {
             $this->assertContains($s, $air);
             $this->assertNotContains($s, $sea);
         }

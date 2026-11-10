@@ -79,7 +79,7 @@ class Shipment extends Model
 
     /**
      * Status flow (admin label, Bengali public label).
-     *   Air: Collected → UK Airport → In Air → Bangladesh Airport → Dhaka/Sylhet Office → In Transit → Delivered
+     *   Air: Collected → UK Airport → In Air → Bangladesh Airport (or Sylhet Airport, awaiting customs) → Dhaka/Sylhet Office → In Transit → Delivered
      *   Sea: Collected → UK Port → In Sea → Chattogram Port → Dhaka/Sylhet Office → In Transit → Delivered
      */
     public const STATUSES = [
@@ -88,6 +88,7 @@ class Shipment extends Model
         'uk_airport'     => ['Heathrow / UK Airport', 'যুক্তরাজ্য বিমানবন্দরে (হিথ্রো)'],
         'in_air'         => ['In Air', 'আকাশপথে'],
         'bd_airport'     => ['Hazrat Shahjalal International Airport, Dhaka', 'হযরত শাহজালাল আন্তর্জাতিক বিমানবন্দর, ঢাকা'],
+        'sylhet_airport' => ['Sylhet Airport – Awaiting Customs Clearance', 'সিলেট বিমানবন্দরে, কাস্টমস ক্লিয়ারেন্সের অপেক্ষায়'],
         'uk_port'        => ['UK Port', 'যুক্তরাজ্য বন্দরে'],
         'at_sea'         => ['In Sea', 'সমুদ্রপথে'],
         'bd_port'        => ['Chattogram International Port', 'চট্টগ্রাম আন্তর্জাতিক বন্দর'],
@@ -100,7 +101,7 @@ class Shipment extends Model
     ];
 
     private const MODE_STATUSES = [
-        'air' => ['pending', 'collected', 'uk_airport', 'in_air', 'bd_airport', 'dhaka_office', 'sylhet_office', 'in_transit', 'delivered', 'returned', 'cancelled'],
+        'air' => ['pending', 'collected', 'uk_airport', 'in_air', 'bd_airport', 'sylhet_airport', 'dhaka_office', 'sylhet_office', 'in_transit', 'delivered', 'returned', 'cancelled'],
         'sea' => ['pending', 'collected', 'uk_port', 'at_sea', 'bd_port', 'dhaka_office', 'sylhet_office', 'in_transit', 'delivered', 'returned', 'cancelled'],
     ];
 
@@ -128,7 +129,7 @@ class Shipment extends Model
         return match ($this->status) {
             'delivered'                                   => 'success',
             'in_transit', 'in_air', 'at_sea'              => 'info',
-            'uk_airport', 'uk_port', 'bd_airport', 'bd_port',
+            'uk_airport', 'uk_port', 'bd_airport', 'sylhet_airport', 'bd_port',
             'dhaka_office', 'sylhet_office'               => 'warning',
             'returned', 'cancelled'                       => 'danger',
             default                                       => 'gray',

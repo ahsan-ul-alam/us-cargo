@@ -22,7 +22,7 @@ class ShipmentStatusChart extends ChartWidget
     {
         $colors = [
             'pending' => '#94a3b8', 'collected' => '#6366f1',
-            'uk_airport' => '#8b5cf6', 'in_air' => '#0ea5e9', 'bd_airport' => '#f59e0b',
+            'uk_airport' => '#8b5cf6', 'in_air' => '#0ea5e9', 'bd_airport' => '#f59e0b', 'sylhet_airport' => '#eab308',
             'uk_port' => '#a855f7', 'at_sea' => '#0284c7', 'bd_port' => '#d97706',
             'dhaka_office' => '#14b8a6', 'sylhet_office' => '#0d9488', 'in_transit' => '#06b6d4',
             'delivered' => '#22c55e', 'returned' => '#f97316', 'cancelled' => '#ef4444',
