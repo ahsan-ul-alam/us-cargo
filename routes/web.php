@@ -27,6 +27,9 @@ Route::post('/quote',    [QuoteController::class, 'store'])->name('quote.store')
 Route::get('/contact',   [ContactController::class, 'index'])->name('contact');
 Route::post('/contact',  [ContactController::class, 'store'])->name('contact.store');
 
+Route::get('/agent-apply',  [\App\Http\Controllers\AgentApplicationController::class, 'index'])->name('agent.apply');
+Route::post('/agent-apply', [\App\Http\Controllers\AgentApplicationController::class, 'store'])->middleware('throttle:5,1')->name('agent.apply.store');
+
 Route::get('/admin/shipments/{shipment}/invoice', [InvoiceController::class, 'show'])
     ->middleware('auth')
     ->name('admin.invoice');

@@ -32,6 +32,7 @@
       ['about', 'আমাদের সম্পর্কে'],
       ['faq', 'প্রশ্নোত্তর'],
       ['reviews', 'রিভিউ'],
+      ['agent.apply', 'এজেন্ট হোন'],
       ['contact', 'যোগাযোগ'],
     ];
   @endphp
@@ -99,6 +100,7 @@
             <li><a href="{{ route('pricing') }}">মূল্য তালিকা</a></li>
             <li><a href="{{ route('tracking') }}">ট্র্যাকিং</a></li>
             <li><a href="{{ route('faq') }}">প্রশ্নোত্তর</a></li>
+            <li><a href="{{ route('agent.apply') }}">এজেন্ট হোন</a></li>
           </ul>
         </div>
         <div>
